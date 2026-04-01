@@ -1,0 +1,5 @@
+{
+  "name": "Hospital Rota Management System",
+  "description": "A comprehensive system for managing hospital ward rotas, duties, leave requests, and staff communication.",
+  "requestFramePermissions": []
+}

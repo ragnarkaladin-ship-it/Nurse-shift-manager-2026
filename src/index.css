@@ -1,0 +1,41 @@
+@import "tailwindcss";
+
+@layer base {
+  @media print {
+    @page {
+      size: landscape;
+      margin: 1cm;
+    }
+    
+    body {
+      background: white !important;
+      color: black !important;
+    }
+
+    .bg-zinc-900, .bg-zinc-950, .bg-zinc-800, .bg-zinc-800\/50 {
+      background: white !important;
+      border-color: #e5e7eb !important;
+    }
+
+    .text-white, .text-zinc-300, .text-zinc-400, .text-zinc-500 {
+      color: black !important;
+    }
+
+    .border-zinc-800, .border-zinc-700, .border-zinc-800\/50 {
+      border-color: #e5e7eb !important;
+    }
+
+    /* Ensure the table fits */
+    table {
+      font-size: 8px !important;
+    }
+
+    th, td {
+      padding: 2px !important;
+    }
+
+    .sticky {
+      position: static !important;
+    }
+  }
+}

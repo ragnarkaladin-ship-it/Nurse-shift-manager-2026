@@ -1,0 +1,105 @@
+{
+  "entities": {
+    "User": {
+      "title": "User",
+      "description": "Represents a user in the system.",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string" },
+        "name": { "type": "string" },
+        "email": { "type": "string", "format": "email" },
+        "phone": { "type": "string" },
+        "role": { "type": "string", "enum": ["admin", "cno", "ward_admin", "hr", "staff"] },
+        "wardId": { "type": "string" },
+        "nckRegistrationNumber": { "type": "string" },
+        "licenseExpiryDate": { "type": "string", "format": "date" },
+        "isDefaultPassword": { "type": "boolean" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["uid", "name", "email", "role"]
+    },
+    "Rota": {
+      "title": "Rota",
+      "description": "Represents a monthly duty rota for a ward.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "wardId": { "type": "string" },
+        "month": { "type": "integer" },
+        "year": { "type": "integer" },
+        "status": { "type": "string", "enum": ["draft", "pending_cno", "approved"] },
+        "createdBy": { "type": "string" },
+        "approvedBy": { "type": "string" },
+        "submittedAt": { "type": "string", "format": "date-time" },
+        "approvedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["id", "wardId", "month", "year", "status", "createdBy"]
+    },
+    "Duty": {
+      "title": "Duty",
+      "description": "Represents a single duty shift for a staff member.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "rotaId": { "type": "string" },
+        "staffId": { "type": "string" },
+        "date": { "type": "string", "format": "date" },
+        "type": { "type": "string", "enum": ["S", "N", "O", "L", "PH"] }
+      },
+      "required": ["id", "rotaId", "staffId", "date", "type"]
+    },
+    "Message": {
+      "title": "Message",
+      "description": "Represents a message between users.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "senderId": { "type": "string" },
+        "receiverId": { "type": "string" },
+        "content": { "type": "string" },
+        "timestamp": { "type": "string", "format": "date-time" },
+        "read": { "type": "boolean" }
+      },
+      "required": ["id", "senderId", "receiverId", "content", "timestamp", "read"]
+    },
+    "LeaveRequest": {
+      "title": "LeaveRequest",
+      "description": "Represents a request for leave.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "staffId": { "type": "string" },
+        "startDate": { "type": "string", "format": "date" },
+        "endDate": { "type": "string", "format": "date" },
+        "reason": { "type": "string" },
+        "status": { "type": "string", "enum": ["pending", "approved", "rejected"] },
+        "reviewedBy": { "type": "string" },
+        "timestamp": { "type": "string", "format": "date-time" }
+      },
+      "required": ["id", "staffId", "startDate", "endDate", "reason", "status", "timestamp"]
+    },
+    "SwapRequest": {
+      "title": "SwapRequest",
+      "description": "Represents a request to swap shifts.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "requesterId": { "type": "string" },
+        "targetStaffId": { "type": "string" },
+        "requesterDate": { "type": "string", "format": "date" },
+        "targetDate": { "type": "string", "format": "date" },
+        "status": { "type": "string", "enum": ["pending_target", "pending_cno", "approved", "rejected"] },
+        "timestamp": { "type": "string", "format": "date-time" }
+      },
+      "required": ["id", "requesterId", "targetStaffId", "requesterDate", "targetDate", "status", "timestamp"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": { "schema": "User", "description": "User profiles." },
+    "/rotas/{rotaId}": { "schema": "Rota", "description": "Monthly rotas." },
+    "/duties/{dutyId}": { "schema": "Duty", "description": "Individual duties." },
+    "/messages/{messageId}": { "schema": "Message", "description": "Direct messages." },
+    "/leaveRequests/{requestId}": { "schema": "LeaveRequest", "description": "Leave requests." },
+    "/swapRequests/{requestId}": { "schema": "SwapRequest", "description": "Shift swap requests." }
+  }
+}
